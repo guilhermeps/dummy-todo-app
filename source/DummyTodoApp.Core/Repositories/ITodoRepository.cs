@@ -12,6 +12,10 @@ namespace DummyTodoApp.Core.Repositories
 
         Todo Get(Guid id);
 
+        IList<Todo> GetAllUnreadTodos();
+
+        void Update(Todo todo);
+
         void Remove(Guid id);
     }
 }

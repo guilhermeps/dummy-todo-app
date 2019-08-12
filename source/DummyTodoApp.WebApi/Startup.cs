@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
+using DummyTodoApp.Infrastructure.BackgroundServices;
 
 namespace DummyTodoApp.WebApi
 {
@@ -38,6 +38,7 @@ namespace DummyTodoApp.WebApi
             {
                 options.UseInMemoryDatabase("Database_Production");
             });
+            services.AddHostedService<ReadTodoService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",

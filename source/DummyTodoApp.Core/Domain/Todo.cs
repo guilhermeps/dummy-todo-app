@@ -10,6 +10,8 @@ namespace DummyTodoApp.Core.Domain
 
         public string Owner { get; private set; }
 
+        public bool Read { get; set; }
+
         public Todo()
         {
             Id = Guid.NewGuid();
