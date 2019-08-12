@@ -30,7 +30,12 @@ namespace DummyTodoApp.WebApi.Controllers
             IList<TodoVo> todosVoList = new List<TodoVo>();
             todos.ToList().ForEach(t =>
             {
-                todosVoList.Add(new TodoVo { Description = t.Description, Owner = t.Owner });
+                todosVoList.Add(new TodoVo 
+                { 
+                    Description = t.Description, 
+                    Owner = t.Owner,
+                    Read = t.Read
+                });
             });
             return Ok(todosVoList);
         }

@@ -9,5 +9,8 @@ namespace DummyTodoApp.WebApi.ValueObjects
 
         [JsonProperty("owner")]
         public string Owner { get; set; }
+
+        [JsonProperty("read")]
+        public bool Read { get; set; }
     }
 }
