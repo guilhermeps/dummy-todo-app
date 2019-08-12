@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyTodoApp.WebApi", "sour
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AC15A2B5-DAD1-46E9-8DFB-AA3EBC68EB5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyTodoApp.IntegrationTests", "tests\xUnitIntegrationTest.WebApi.IntegrationTests\DummyTodoApp.IntegrationTests.csproj", "{7B58C9AF-1AE2-4E0E-BFFE-308322EFD3C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyTodoApp.IntegrationTests", "tests\DummyTodoApp.WebApi.IntegrationTests\DummyTodoApp.IntegrationTests.csproj", "{7B58C9AF-1AE2-4E0E-BFFE-308322EFD3C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyTodoApp.Infrastructure", "source\DummyTodoApp.Infrastructure\DummyTodoApp.Infrastructure.csproj", "{32DBB1E6-5F0A-4453-802F-614CC2BA21AC}"
 EndProject
