@@ -2,13 +2,15 @@
 
 namespace DummyTodoApp.Core.Domain
 {
-    public class Todo
+    public sealed class Todo
     {
         public Guid Id { get; private set; }
 
         public string Description { get; private set; }
 
         public string Owner { get; private set; }
+
+        public bool Done { get; set; }
 
         public Todo()
         {
