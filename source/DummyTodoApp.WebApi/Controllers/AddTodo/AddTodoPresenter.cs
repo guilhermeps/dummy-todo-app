@@ -3,9 +3,9 @@ using DummyTodoApp.Core.UseCases.AddTodo.Boundaries;
 using DummyTodoApp.WebApi.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DummyTodoApp.WebApi.Presenter
+namespace DummyTodoApp.WebApi.Controllers.AddTodo
 {
-    public sealed class AddAccountPresenter : IOutputHandler
+    public sealed class AddTodoPresenter : IOutputHandler
     {
         public IActionResult ViewModel { get; private set; }
 

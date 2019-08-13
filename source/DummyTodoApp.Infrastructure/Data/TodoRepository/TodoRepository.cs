@@ -21,12 +21,14 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 
         public async Task<IList<Todo>> Get(string owner)
         {
-            return await Task.Run(() => context.Todos.Where(t => t.Owner == owner).ToList());
+            var todoList = context.Todos.Where(t => t.Owner == owner).ToList();
+            return await Task.FromResult(todoList);
         }
 
         public async Task<Todo> Get(Guid id)
         {
-            return await Task.Run(() => context.Todos.SingleOrDefault(t => t.Id == id));
+            var todo = context.Todos.SingleOrDefault(t => t.Id == id);
+            return await Task.FromResult(todo);
         }
     }
 }

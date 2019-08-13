@@ -62,10 +62,15 @@ namespace DummyTodoApp.WebApi
 
         private void AddDummyTodoAppCore(IServiceCollection services)
         {
-            services.AddScoped<DummyTodoApp.Core.AddTodo.Boundaries.IUseCase, AddTodoItem>();
-            services.AddScoped<DummyTodoApp.WebApi.Presenter.AddAccountPresenter, DummyTodoApp.WebApi.Presenter.AddAccountPresenter>();
-            services.AddScoped<DummyTodoApp.Core.UseCases.Boundaries.IOutputHandler>(s => 
-                s.GetRequiredService<DummyTodoApp.WebApi.Presenter.AddAccountPresenter>());
+            services.AddScoped<DummyTodoApp.Core.Boundaries.AddTodo.IUseCase, AddTodoItem>();
+            services.AddScoped<DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter, DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter>();
+            services.AddScoped<DummyTodoApp.Core.Boundaries.AddTodo.IOutputHandler>(s => 
+                s.GetRequiredService<DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter>());
+            
+            services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IUseCase, GetAllTodos>();
+            services.AddScoped<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter, DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>();
+            services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IOutputHandler>(s => 
+                s.GetRequiredService<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>());
         }
 
         private void AddDummyTodoAppDatabase(IServiceCollection services)
