@@ -1,6 +1,7 @@
 ﻿using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Core.UseCases;
 using DummyTodoApp.Infrastructure.Data.TodoRepository;
+using DummyTodoApp.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,9 @@ namespace DummyTodoApp.WebApi
                         .AllowCredentials();
                     });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => {
+                options.Filters.Add(new CustomExceptionFilterAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
