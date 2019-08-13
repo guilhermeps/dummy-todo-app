@@ -17,7 +17,7 @@ namespace DummyTodoApp.Core.UseCases
             outputHandler = handler;
         }
 
-        public Task Execute(string input)
+        public async Task Execute(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -25,8 +25,8 @@ namespace DummyTodoApp.Core.UseCases
                 return;
             }
 
-            var todoList = repository.Get(input);
-            outputHandler.Handle(new Output(todoList.Result));            
+            var todoList = await repository.Get(input);
+            outputHandler.Handle(new Output(todoList));            
         }
     }
 }

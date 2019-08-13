@@ -62,9 +62,9 @@ namespace DummyTodoApp.WebApi
 
         private void AddDummyTodoAppCore(IServiceCollection services)
         {
-            services.AddScoped<DummyTodoApp.Core.UseCases.AddTodo.Boundaries.IUseCase, AddTodoItem>();
+            services.AddScoped<DummyTodoApp.Core.AddTodo.Boundaries.IUseCase, AddTodoItem>();
             services.AddScoped<DummyTodoApp.WebApi.Presenter.AddAccountPresenter, DummyTodoApp.WebApi.Presenter.AddAccountPresenter>();
-            services.AddScoped<DummyTodoApp.Core.UseCases.AddTodo.Boundaries.IOutputHandler>(s => 
+            services.AddScoped<DummyTodoApp.Core.UseCases.Boundaries.IOutputHandler>(s => 
                 s.GetRequiredService<DummyTodoApp.WebApi.Presenter.AddAccountPresenter>());
         }
 

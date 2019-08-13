@@ -1,4 +1,5 @@
-﻿using DummyTodoApp.Core.UseCases.AddTodo.Boundaries;
+﻿using DummyTodoApp.Core.Boundaries.AddTodo;
+using DummyTodoApp.Core.UseCases.AddTodo.Boundaries;
 using DummyTodoApp.WebApi.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
