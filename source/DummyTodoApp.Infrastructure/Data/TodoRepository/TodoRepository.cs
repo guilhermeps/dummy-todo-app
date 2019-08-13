@@ -3,6 +3,7 @@ using DummyTodoApp.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 {
@@ -10,26 +11,24 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
     {
         readonly TodoContext context;
 
-        public TodoRepository(TodoContext ctx)
+        public TodoRepository(TodoContext ctx) => context = ctx ?? throw new ArgumentException(nameof(ctx));
+
+        public async Task Add(Todo todo)
         {
-            context = ctx;
+            await context.Todos.AddAsync(todo);
+            await context.SaveChangesAsync();
         }
 
-        public void Add(Todo todo)
+        public async Task<IList<Todo>> Get(string owner)
         {
-            context.Todos.Add(todo);
-            context.SaveChanges();
+            var todoList = context.Todos.Where(t => t.Owner == owner).ToList();
+            return await Task.FromResult(todoList);
         }
 
-        public IList<Todo> Get(string owner) => context.Todos.Where(t => t.Owner == owner).ToList();
-
-        public Todo Get(Guid id) => context.Todos.SingleOrDefault(t => t.Id == id);
-        
-        public void Remove(Guid id)
+        public async Task<Todo> Get(Guid id)
         {
-            var todo = Get(id);
-            context.Todos.Remove(todo);
-            context.SaveChanges();
+            var todo = context.Todos.SingleOrDefault(t => t.Id == id);
+            return await Task.FromResult(todo);
         }
     }
 }

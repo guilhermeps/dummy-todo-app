@@ -1,17 +1,16 @@
 ﻿using DummyTodoApp.Core.Domain;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DummyTodoApp.Core.Repositories
 {
     public interface ITodoRepository
     {
-        void Add(Todo todo);
+        Task Add(Todo todo);
 
-        IList<Todo> Get(string owner);
+        Task<IList<Todo>> Get(string owner);
 
-        Todo Get(Guid id);
-
-        void Remove(Guid id);
+        Task<Todo> Get(Guid id);
     }
 }

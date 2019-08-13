@@ -1,22 +1,32 @@
-﻿using DummyTodoApp.Core.Domain;
+﻿using DummyTodoApp.Core.Boundaries.GetTodosByOwner;
 using DummyTodoApp.Core.Repositories;
-using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DummyTodoApp.Core.UseCases
 {
-    public sealed class GetAllTodos : IUseCase<string, IList<Todo>>
+    public sealed class GetAllTodos : IUseCase
     {
         readonly ITodoRepository repository;
+        readonly IOutputHandler outputHandler;
 
-        public GetAllTodos(ITodoRepository repo) => repository = repo;
-
-        public IList<Todo> Execute(string input)
+        public GetAllTodos(
+            ITodoRepository repo,
+            IOutputHandler handler)
         {
-            if (!string.IsNullOrWhiteSpace(input))
-                return repository.Get(input);
-            else
-                throw new Exception("Todos not found");
+            repository = repo;
+            outputHandler = handler;
+        }
+
+        public async Task Execute(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                outputHandler.NotifyError("Owner does not exist");
+                return;
+            }
+
+            var todoList = await repository.Get(input);
+            outputHandler.Handle(new Output(todoList));            
         }
     }
 }

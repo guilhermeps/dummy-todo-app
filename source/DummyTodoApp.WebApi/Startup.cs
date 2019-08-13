@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DummyTodoApp.Core.Domain;
+﻿using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Core.UseCases;
-using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Infrastructure.Data.TodoRepository;
+using DummyTodoApp.WebApi.ActionFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-
 
 namespace DummyTodoApp.WebApi
 {
@@ -31,13 +23,11 @@ namespace DummyTodoApp.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ITodoRepository, TodoRepository>();
-            services.AddScoped<IUseCase<Todo>, AddTodoItem>();
-            services.AddScoped<IUseCase<string, IList<Todo>>, GetAllTodos>();
-            services.AddDbContext<TodoContext>(options =>
-            {
-                options.UseInMemoryDatabase("Database_Production");
-            });
+            AddDummyTodoAppDatabase(services);
+            AddDummyTodoAppCore(services);
+
+            // services.AddScoped<IUseCase<string, IList<Todo>>, GetAllTodos>();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -50,7 +40,9 @@ namespace DummyTodoApp.WebApi
                         .AllowCredentials();
                     });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => {
+                options.Filters.Add(new CustomExceptionFilterAttribute());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +61,28 @@ namespace DummyTodoApp.WebApi
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
             app.UseMvc();
+        }
+
+        private void AddDummyTodoAppCore(IServiceCollection services)
+        {
+            services.AddScoped<DummyTodoApp.Core.Boundaries.AddTodo.IUseCase, AddTodoItem>();
+            services.AddScoped<DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter, DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter>();
+            services.AddScoped<DummyTodoApp.Core.Boundaries.AddTodo.IOutputHandler>(s => 
+                s.GetRequiredService<DummyTodoApp.WebApi.Controllers.AddTodo.AddTodoPresenter>());
+            
+            services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IUseCase, GetAllTodos>();
+            services.AddScoped<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter, DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>();
+            services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IOutputHandler>(s => 
+                s.GetRequiredService<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>());
+        }
+
+        private void AddDummyTodoAppDatabase(IServiceCollection services)
+        {
+            services.AddTransient<ITodoRepository, TodoRepository>();
+            services.AddDbContext<TodoContext>(options =>
+            {
+                options.UseInMemoryDatabase("Database_Production");
+            });
         }
     }
 }
