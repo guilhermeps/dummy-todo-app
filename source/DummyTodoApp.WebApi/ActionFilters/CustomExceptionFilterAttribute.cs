@@ -8,7 +8,9 @@ namespace DummyTodoApp.WebApi.ActionFilters
         public override void OnException(ExceptionContext context)
         {
             context.HttpContext.Response.StatusCode = 500;
-            context.Result = new JsonResult(new {
+            context.Result = new JsonResult(
+            new
+            {
                 message = context.Exception.GetBaseException().Message
             });
             base.OnException(context);

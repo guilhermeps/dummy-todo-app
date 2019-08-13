@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 {
-    public class TodoRepository : ITodoRepository
+    public sealed class TodoRepository : ITodoRepository
     {
         readonly TodoContext context;
 

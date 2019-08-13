@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 {
-    public class TodoContext : DbContext
+    public sealed class TodoContext : DbContext
     {
         public TodoContext(DbContextOptions<TodoContext> options) : base(options) { }
 

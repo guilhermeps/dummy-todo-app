@@ -25,8 +25,6 @@ namespace DummyTodoApp.WebApi
         {
             AddDummyTodoAppDatabase(services);
             AddDummyTodoAppCore(services);
-
-            // services.AddScoped<IUseCase<string, IList<Todo>>, GetAllTodos>();
             
             services.AddCors(options =>
             {
