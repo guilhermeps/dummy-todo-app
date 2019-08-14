@@ -18,7 +18,10 @@ namespace DummyTodoApp.WebApi.Controllers.GetTodoListByOwner
             ViewModel = new OkObjectResult(todoList);
         }
 
-        public void NotifyError(string message) => ViewModel = new BadRequestObjectResult(message);
+        public void NotifyError(string errorMessage)
+        {
+            ViewModel = new BadRequestObjectResult(new { message = errorMessage });
+        }
 
         private TodoVo ToTodoValueObject(OutputItem output) 
         {

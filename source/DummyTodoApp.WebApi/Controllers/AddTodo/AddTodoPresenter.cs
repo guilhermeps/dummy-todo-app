@@ -15,9 +15,9 @@ namespace DummyTodoApp.WebApi.Controllers.AddTodo
             ViewModel = new CreatedResult($"/api/todos?owner={todo.Owner}", todo);
         }
 
-        public void NotifyError(string message)
+        public void NotifyError(string errorMessage)
         {
-            ViewModel = new BadRequestObjectResult(message);
+            ViewModel = new BadRequestObjectResult(new { message = errorMessage });
         }
 
         private TodoVo ToTodoValueObject(Output output)
