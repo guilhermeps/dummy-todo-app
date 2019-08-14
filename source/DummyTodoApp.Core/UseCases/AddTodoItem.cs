@@ -21,19 +21,18 @@ namespace DummyTodoApp.Core.UseCases
 
         public async Task Execute(Input input)
         {
-            if (!input.IsValid())
+            if (input != null && input.IsValid())
             {
-                outputHandler.NotifyError("Todo object is not valid.");
+                await repository.Add(new Todo(input.Description, input.Owner));
+                outputHandler.Handle(new Output
+                {
+                    Description = input.Description,
+                    Owner = input.Owner
+                });
                 return;
             }
 
-            await repository.Add(new Todo(input.Description, input.Owner));
-            outputHandler.Handle(new Output
-            {
-                Description = input.Description,
-                Owner = input.Owner,
-                Done = false
-            });
+            outputHandler.NotifyError("Todo object is not valid.");
         }
     }
 }
