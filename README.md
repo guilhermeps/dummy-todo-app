@@ -16,7 +16,7 @@ The WebApi project consists in how the todos are delivered to the user. In our p
 
 The dependency direction goes from WebApi to Core. In fact, WebApi references Infrastructure and Core implementations. Infrastructure dependends on Core and Core itself depends on anyone. 
 
-### Automated testes
+### Automated tests
 At this moment I have just implementend some component tests for successful post and get todos by owner. The main point here is on raise a specific web host where we have full control. 
 The unit tests and integration test were be immplemented very soon.
 To run the existing tests just run the commando bellow:
