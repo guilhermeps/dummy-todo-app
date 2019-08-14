@@ -19,7 +19,7 @@ At this moment I have just implementend some component tests for successful post
 The unit tests and integration test were be immplemented very soon.
 To run the existing tests just run the commando bellow:
 ```
-$ dotnet test ".\source\DummyTodoApp.IntegrationTests\DummyTodoApp.IntegrationTests.csproj"
+$ dotnet test ".\tests\DummyTodoApp.IntegrationTests\DummyTodoApp.IntegrationTests.csproj"
 ```
 
 ### Contributions
