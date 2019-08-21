@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyTodoApp.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyTodoApp.Core", "source\DummyTodoApp.Core\DummyTodoApp.Core.csproj", "{2F094073-D1F1-4D12-8BB6-CFE5DC617E74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyTodoApp.Domain", "DummyTodoApp.Domain\DummyTodoApp.Domain.csproj", "{492C3BBC-21DB-46AD-AA44-BADC9B96145B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyTodoApp.Domain", "source\DummyTodoApp.Domain\DummyTodoApp.Domain.csproj", "{492C3BBC-21DB-46AD-AA44-BADC9B96145B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
