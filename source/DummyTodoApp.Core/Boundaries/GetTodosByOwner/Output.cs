@@ -1,4 +1,4 @@
-﻿using DummyTodoApp.Core.Domain;
+﻿using DummyTodoApp.Domain;
 using System.Collections.Generic;
 
 namespace DummyTodoApp.Core.Boundaries.GetTodosByOwner

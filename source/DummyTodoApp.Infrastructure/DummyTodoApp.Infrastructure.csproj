@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DummyTodoApp.Domain\DummyTodoApp.Domain.csproj" />
     <ProjectReference Include="..\DummyTodoApp.Core\DummyTodoApp.Core.csproj" />
   </ItemGroup>
 

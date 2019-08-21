@@ -1,7 +1,7 @@
 ﻿using DummyTodoApp.Core.Boundaries.AddTodo;
-using DummyTodoApp.Core.Domain;
 using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Core.UseCases.AddTodo.Boundaries;
+using DummyTodoApp.Domain;
 using System.Threading.Tasks;
 
 namespace DummyTodoApp.Core.UseCases

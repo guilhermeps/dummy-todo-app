@@ -1,5 +1,6 @@
-﻿using DummyTodoApp.Core.Domain;
-using DummyTodoApp.Core.Repositories;
+﻿using DummyTodoApp.Core.Repositories;
+using DummyTodoApp.Domain;
+using DummyTodoApp.Infrastructure.Data.TodoRepository.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +16,24 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 
         public async Task Add(Todo todo)
         {
-            await context.Todos.AddAsync(todo);
+            var todoModel = TodoMapper.ToModel(todo);
+            await context.Todos.AddAsync(todoModel);
             await context.SaveChangesAsync();
         }
 
         public async Task<IList<Todo>> Get(string owner)
         {
             var todoList = context.Todos.Where(t => t.Owner == owner).ToList();
-            return await Task.FromResult(todoList);
+            IList<Todo> todoDomainList = new List<Todo>();
+            todoList.ForEach(model => todoDomainList.Add(TodoMapper.ToDomain(model)));
+            return await Task.FromResult(todoDomainList);
         }
 
         public async Task<Todo> Get(Guid id)
         {
             var todo = context.Todos.SingleOrDefault(t => t.Id == id);
-            return await Task.FromResult(todo);
+            var todoDomain = TodoMapper.ToDomain(todo);
+            return await Task.FromResult(todoDomain);
         }
     }
 }
