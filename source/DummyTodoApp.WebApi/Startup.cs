@@ -2,12 +2,15 @@
 using DummyTodoApp.Core.UseCases;
 using DummyTodoApp.Infrastructure.Data.TodoRepository;
 using DummyTodoApp.WebApi.ActionFilters;
+using DummyTodoApp.WebApi.Settings;
+using DummyTodoApp.WebApi.StartupFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace DummyTodoApp.WebApi
 {
@@ -25,7 +28,7 @@ namespace DummyTodoApp.WebApi
         {
             AddDummyTodoAppDatabase(services);
             AddDummyTodoAppCore(services);
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -38,9 +41,11 @@ namespace DummyTodoApp.WebApi
                         .AllowCredentials();
                     });
             });
-            services.AddMvc(options => {
+            services.AddMvc(options =>
+            {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            AddSettings(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +86,15 @@ namespace DummyTodoApp.WebApi
             {
                 options.UseInMemoryDatabase("Database_Production");
             });
+        }
+
+        private void AddSettings(IServiceCollection services)
+        {
+            services.AddTransient<IStartupFilter, SettingsValidationStartupFilter>();
+            services.Configure<DummySettings>(Configuration.GetSection("DummyConfiguration"));
+            services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<DummySettings>>().Value);
+            services.AddSingleton<IValidatable>(resolver => 
+                resolver.GetRequiredService<IOptions<DummySettings>>().Value);
         }
     }
 }

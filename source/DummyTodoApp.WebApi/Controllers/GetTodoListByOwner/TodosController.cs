@@ -1,4 +1,5 @@
 ﻿using DummyTodoApp.Core.Boundaries.GetTodosByOwner;
+using DummyTodoApp.WebApi.Settings;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,16 +10,30 @@ namespace DummyTodoApp.WebApi.Controllers.GetTodoListByOwner
     public class TodosController : ControllerBase
     {
         readonly GetTodoListByOwnerPresenter getTodoPresenter;
+        readonly DummySettings dummySettings;
 
-        public TodosController(GetTodoListByOwnerPresenter presenter) => getTodoPresenter = presenter;
+        public TodosController(
+            GetTodoListByOwnerPresenter presenter,
+            DummySettings settings) 
+        {
+            getTodoPresenter = presenter;
+            dummySettings = settings;
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Post(
+        public async Task<IActionResult> Get(
             [FromServices] IUseCase useCase,
             [FromQuery] string owner)
         {
-            await useCase.Execute(owner);
-            return getTodoPresenter.ViewModel;
+            if (dummySettings.IsOpenToGetTodos) 
+            {
+                await useCase.Execute(owner);
+                return getTodoPresenter.ViewModel;
+            }
+            else
+            {
+                return Ok(new { message = "Today is not opened to get todos."});
+            }            
         }
     }
 }
