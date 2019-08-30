@@ -4,7 +4,7 @@ Very simple implementation following The Clean Architecture Principles, with no 
 ### Running from source
 Running from Windows machine:
 ```
-$ dotnet run ".\source\DummyTodoApp.WebApi\DummyTodoApp.WebApi.csproj"
+$ dotnet run .\source\DummyTodoApp.WebApi\DummyTodoApp.WebApi.csproj
 ```
 
 ### Dummy Todo App Core
@@ -27,7 +27,7 @@ At this moment I have just implementend some component tests for successful post
 The unit tests and integration test were be immplemented very soon.
 To run the existing tests just run the command bellow:
 ```
-$ dotnet test ".\tests\DummyTodoApp.IntegrationTests\DummyTodoApp.IntegrationTests.csproj"
+$ dotnet test .\tests\DummyTodoApp.IntegrationTests\DummyTodoApp.IntegrationTests.csproj
 ```
 
 ### Contributions
