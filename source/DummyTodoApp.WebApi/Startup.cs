@@ -1,5 +1,6 @@
 ﻿using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Core.UseCases;
+using DummyTodoApp.Infrastructure.BackgroundServices;
 using DummyTodoApp.Infrastructure.Data.TodoRepository;
 using DummyTodoApp.WebApi.ActionFilters;
 using DummyTodoApp.WebApi.Settings;
@@ -29,6 +30,8 @@ namespace DummyTodoApp.WebApi
             AddDummyTodoAppDatabase(services);
             AddDummyTodoAppCore(services);
 
+            AddSettings(services);
+            AddBackgroundServices(services);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -45,7 +48,6 @@ namespace DummyTodoApp.WebApi
             {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            AddSettings(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +79,8 @@ namespace DummyTodoApp.WebApi
             services.AddScoped<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter, DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>();
             services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IOutputHandler>(s => 
                 s.GetRequiredService<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>());
+
+            services.AddScoped<DummyTodoApp.Core.Boundaries.ReadAllUnreadTodos.IUseCase, ReadAllUnreadTodos>();
         }
 
         private void AddDummyTodoAppDatabase(IServiceCollection services)
@@ -95,6 +99,11 @@ namespace DummyTodoApp.WebApi
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<DummySettings>>().Value);
             services.AddSingleton<IValidatable>(resolver => 
                 resolver.GetRequiredService<IOptions<DummySettings>>().Value);
+        }
+
+        private void AddBackgroundServices(IServiceCollection services)
+        {
+            services.AddHostedService<ReadTodoHostedService>();
         }
     }
 }

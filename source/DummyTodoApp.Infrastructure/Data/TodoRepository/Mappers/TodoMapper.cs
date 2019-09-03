@@ -8,14 +8,14 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository.Mappers
         public static TodoModel ToModel(Todo todo)
         {
             if (todo != null)
-                return new TodoModel(todo.Description, todo.Owner);
+                return new TodoModel(todo.Description, todo.Owner, todo.ExecutionPriority);
             else return null;
         }
 
         public static Todo ToDomain(TodoModel model)
         {
             if (model != null)
-                return new Todo(model.Description, model.Owner);
+                return new Todo(model.Description, model.Owner, model.ExecutionPriority);
             else return null;
         }
     }

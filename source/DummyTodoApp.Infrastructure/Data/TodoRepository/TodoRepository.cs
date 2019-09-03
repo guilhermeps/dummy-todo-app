@@ -1,6 +1,7 @@
 ﻿using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Domain;
 using DummyTodoApp.Infrastructure.Data.TodoRepository.Mappers;
+using DummyTodoApp.Infrastructure.Data.TodoRepository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +30,30 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
             return await Task.FromResult(todoDomainList);
         }
 
-        public async Task<Todo> Get(Guid id)
+        public async Task<IList<Todo>> GetAllUnreadTodos()
         {
-            var todo = context.Todos.SingleOrDefault(t => t.Id == id);
-            var todoDomain = TodoMapper.ToDomain(todo);
-            return await Task.FromResult(todoDomain);
+            var todoList = context.Todos.Where(t => !t.Done).ToList();
+            IList<Todo> todoDomainList = new List<Todo>();
+            todoList.ForEach(model => todoDomainList.Add(TodoMapper.ToDomain(model)));
+            return await Task.FromResult(todoDomainList);
+        }
+
+        public async Task Update(Todo todo)
+        {
+            var existedTodo = GetSingle(todo.ExecutionPriority);
+            if (existedTodo != null) 
+            {
+                existedTodo.Done = todo.Done;
+                context.Entry(existedTodo).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.Todos.Update(existedTodo);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private TodoModel GetSingle(int priority)
+        {
+            var todo = context.Todos.SingleOrDefault(t => t.ExecutionPriority == priority);
+            return todo;
         }
     }
 }

@@ -19,7 +19,13 @@ namespace DummyTodoApp.WebApi.Controllers.AddTodo
             [FromServices] IUseCase useCase,
             [FromBody] TodoVo todo)
         {
-            await useCase.Execute(new Input { Description = todo.Description, Owner = todo.Owner });
+            await useCase.Execute(
+                new Input 
+                { 
+                    Description = todo.Description, 
+                    Owner = todo.Owner, 
+                    ExecutionPriority = todo.ExecutionPriority 
+                });
             return addTodoPresenter.ViewModel;
         }
     }
