@@ -32,7 +32,7 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 
         public async Task<IList<Todo>> GetAllUnreadTodos()
         {
-            var todoList = context.Todos.Where(t => !t.Done).ToList();
+            var todoList = context.Todos.Where(t => t.Done == false).ToList();
             IList<Todo> todoDomainList = new List<Todo>();
             todoList.ForEach(model => todoDomainList.Add(TodoMapper.ToDomain(model)));
             return await Task.FromResult(todoDomainList);
@@ -40,7 +40,7 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 
         public async Task Update(Todo todo)
         {
-            var existedTodo = GetSingle(todo.ExecutionPriority);
+            var existedTodo = GetUnreadTodosFromGuilherme();
             if (existedTodo != null) 
             {
                 existedTodo.Done = todo.Done;
@@ -50,9 +50,9 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
             }
         }
 
-        private TodoModel GetSingle(int priority)
+        private TodoModel GetUnreadTodosFromGuilherme()
         {
-            var todo = context.Todos.SingleOrDefault(t => t.ExecutionPriority == priority);
+            var todo = context.Todos.Where(t => t.Done == false && t.Owner.ToLowerInvariant() == "guilherme").FirstOrDefault();
             return todo;
         }
     }

@@ -8,15 +8,12 @@
 
         public bool Done { get; set; }
 
-        public int ExecutionPriority { get; set; }
-
-        public Todo(string description, string owner, int priority)
+        public Todo(string description, string owner)
         {
             Description = description;
             Owner = owner;
-            ExecutionPriority = priority;
         }
 
-        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner) && ExecutionPriority > 0;
+        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner);
     }
 }

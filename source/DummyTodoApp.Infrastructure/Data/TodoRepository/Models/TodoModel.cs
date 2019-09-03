@@ -22,17 +22,13 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository.Models
         [Required]
         public bool Done { get; set; }
 
-        [Required]
-        public int ExecutionPriority { get; set; } 
-
-        public TodoModel(string description, string owner, int priority)
+        public TodoModel(string description, string owner)
         {
             Id = Guid.NewGuid();
             Description = description;
             Owner = owner;
-            ExecutionPriority = priority;
         }
 
-        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner) && !(Id == Guid.Empty) && ExecutionPriority > 0;
+        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner) && !(Id == Guid.Empty);
     }
 }

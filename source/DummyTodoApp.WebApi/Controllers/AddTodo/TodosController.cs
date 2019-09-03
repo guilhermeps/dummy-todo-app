@@ -23,8 +23,7 @@ namespace DummyTodoApp.WebApi.Controllers.AddTodo
                 new Input 
                 { 
                     Description = todo.Description, 
-                    Owner = todo.Owner, 
-                    ExecutionPriority = todo.ExecutionPriority 
+                    Owner = todo.Owner
                 });
             return addTodoPresenter.ViewModel;
         }

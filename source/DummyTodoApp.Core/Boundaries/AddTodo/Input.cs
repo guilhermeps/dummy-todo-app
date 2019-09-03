@@ -6,8 +6,6 @@
 
         public string Owner { get; set; }
 
-        public int ExecutionPriority { get; set; }
-
-        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner) && ExecutionPriority > 0;
+        public bool IsValid() => !string.IsNullOrWhiteSpace(Description) && !string.IsNullOrWhiteSpace(Owner);
     }
 }

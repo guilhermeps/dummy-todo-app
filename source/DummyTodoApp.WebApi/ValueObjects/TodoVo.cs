@@ -12,8 +12,5 @@ namespace DummyTodoApp.WebApi.ValueObjects
 
         [JsonProperty("done")]
         public bool Done { get; set; }
-
-        [JsonProperty("priority")]
-        public int ExecutionPriority { get; set; }
     }
 }
