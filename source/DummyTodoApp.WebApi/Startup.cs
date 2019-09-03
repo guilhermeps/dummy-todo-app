@@ -1,5 +1,6 @@
 ﻿using DummyTodoApp.Core.Repositories;
 using DummyTodoApp.Core.UseCases;
+using DummyTodoApp.Infrastructure.BackgroundServices;
 using DummyTodoApp.Infrastructure.Data.TodoRepository;
 using DummyTodoApp.WebApi.ActionFilters;
 using DummyTodoApp.WebApi.Settings;
@@ -41,6 +42,7 @@ namespace DummyTodoApp.WebApi
                         .AllowCredentials();
                     });
             });
+            AddBackgroundServices(services);
             services.AddMvc(options =>
             {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
@@ -77,6 +79,8 @@ namespace DummyTodoApp.WebApi
             services.AddScoped<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter, DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>();
             services.AddScoped<DummyTodoApp.Core.Boundaries.GetTodosByOwner.IOutputHandler>(s => 
                 s.GetRequiredService<DummyTodoApp.WebApi.Controllers.GetTodoListByOwner.GetTodoListByOwnerPresenter>());
+
+            services.AddScoped<DummyTodoApp.Core.Boundaries.ReadAllUnreadTodos.IUseCase, ReadAllUnreadTodos>();
         }
 
         private void AddDummyTodoAppDatabase(IServiceCollection services)
@@ -95,6 +99,11 @@ namespace DummyTodoApp.WebApi
             services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<DummySettings>>().Value);
             services.AddSingleton<IValidatable>(resolver => 
                 resolver.GetRequiredService<IOptions<DummySettings>>().Value);
+        }
+
+        private void AddBackgroundServices(IServiceCollection services)
+        {
+            services.AddHostedService<ReadTodoHostedService>();
         }
     }
 }

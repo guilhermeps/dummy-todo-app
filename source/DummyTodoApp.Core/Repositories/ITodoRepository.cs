@@ -11,6 +11,8 @@ namespace DummyTodoApp.Core.Repositories
 
         Task<IList<Todo>> Get(string owner);
 
-        Task<Todo> Get(Guid id);
+        Task<IList<Todo>> GetAllUnreadTodos();
+
+        Task Update(Todo todo);
     }
 }
