@@ -40,7 +40,7 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
 
         public async Task Update(Todo todo)
         {
-            var existedTodo = GetSingle(todo.Owner);
+            var existedTodo = GetSingle(todo.ExecutionPriority);
             if (existedTodo != null) 
             {
                 existedTodo.Done = todo.Done;
@@ -50,9 +50,9 @@ namespace DummyTodoApp.Infrastructure.Data.TodoRepository
             }
         }
 
-        private TodoModel GetSingle(string owner)
+        private TodoModel GetSingle(int priority)
         {
-            var todo = context.Todos.SingleOrDefault(t => t.Owner == owner);
+            var todo = context.Todos.SingleOrDefault(t => t.ExecutionPriority == priority);
             return todo;
         }
     }

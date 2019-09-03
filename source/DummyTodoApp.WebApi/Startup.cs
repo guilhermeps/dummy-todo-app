@@ -30,6 +30,8 @@ namespace DummyTodoApp.WebApi
             AddDummyTodoAppDatabase(services);
             AddDummyTodoAppCore(services);
 
+            AddSettings(services);
+            AddBackgroundServices(services);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
@@ -42,12 +44,10 @@ namespace DummyTodoApp.WebApi
                         .AllowCredentials();
                     });
             });
-            AddBackgroundServices(services);
             services.AddMvc(options =>
             {
                 options.Filters.Add(new CustomExceptionFilterAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            AddSettings(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -23,7 +23,7 @@ namespace DummyTodoApp.Core.UseCases
         {
             if (input != null && input.IsValid())
             {
-                await repository.Add(new Todo(input.Description, input.Owner));
+                await repository.Add(new Todo(input.Description, input.Owner, input.ExecutionPriority));
                 outputHandler.Handle(new Output
                 {
                     Description = input.Description,
