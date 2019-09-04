@@ -29,7 +29,7 @@ namespace DummyTodoApp.Infrastructure.BackgroundServices
 
         private void DoWork(object state) 
         {
-            using(var scope= Services.CreateScope())
+            using (var scope = Services.CreateScope())
             {
                 var readAllUnreadTodosUseCase = scope.ServiceProvider.GetRequiredService<Core.Boundaries.ReadAllUnreadTodos.IUseCase>();
                 readAllUnreadTodosUseCase.Execute();

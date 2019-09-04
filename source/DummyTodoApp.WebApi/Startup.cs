@@ -85,7 +85,7 @@ namespace DummyTodoApp.WebApi
 
         private void AddDummyTodoAppDatabase(IServiceCollection services)
         {
-            services.AddTransient<ITodoRepository, TodoRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddDbContext<TodoContext>(options =>
             {
                 options.UseInMemoryDatabase("Database_Production");
